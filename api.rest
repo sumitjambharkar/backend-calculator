@@ -1,0 +1,26 @@
+### Send OTP
+POST http://localhost:3000/api/users/send-otp
+Content-Type: application/json
+
+{
+  "phone": "8898699498"
+}
+
+### Verify OTP
+POST http://localhost:3000/api/users/verify-otp
+Content-Type: application/json
+
+{
+  "userId": "68fe41ad526fa4279beaef9a",
+  "otp": "735743"
+}
+
+### Set Name and PIN
+POST http://localhost:3000/api/users/set-name-pin
+Content-Type: application/json
+
+{
+  "userId": "68fe41ad526fa4279beaef9a",
+  "name": "pihhu",
+  "pin": "8888"
+}
