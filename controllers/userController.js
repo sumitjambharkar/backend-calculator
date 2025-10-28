@@ -1,7 +1,10 @@
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-const JWT_SECRET = "your_jwt_secret"; // use env variable in production
+dotenv.config(); // ✅ load .env first
+
+const JWT_SECRET = process.env.JWT_SECRET // use env variable
 
 // Send OTP → generate short-lived token
 export const sendOtp = async (req, res) => {
