@@ -1,7 +1,10 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
+import dotenv from "dotenv";
 
-const JWT_SECRET = "your_jwt_secret"; // use env variable
+dotenv.config(); // ✅ load .env first
+
+const JWT_SECRET = process.env.JWT_SECRET // use env variable
 
 export const auth = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1]; // Bearer TOKEN

@@ -5,6 +5,9 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
+import dotenv from "dotenv";
+
+dotenv.config(); // ✅ load .env first
 
 const app = express();
 const server = http.createServer(app);
@@ -15,7 +18,7 @@ const io = new Server(server, {
   },
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Connect MongoDB
 connectDB();

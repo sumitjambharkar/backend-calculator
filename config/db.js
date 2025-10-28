@@ -1,14 +1,25 @@
+// config/db.js
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config(); // ✅ load .env first
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect("mongodb+srv://sumitjambharkar_db_user:hvbpY9woZ0X5WJLV@cluster0.nmqph0d.mongodb.net/chatapp", {
+    const uri = process.env.MONGO_URI; // use env variable instead of hardcoding
+
+    if (!uri) {
+      throw new Error("MongoDB URI is missing in .env file");
+    }
+
+    const conn = await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error(`Error: ${error.message}`);
+    console.error(`❌ MongoDB connection error: ${error.message}`);
     process.exit(1);
   }
 };
