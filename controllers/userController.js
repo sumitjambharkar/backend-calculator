@@ -68,19 +68,31 @@ export const setNameAndPin = async (req, res) => {
   const { name, pin } = req.body;
   const user = req.user;
 
-  if (!name || !pin) return res.status(400).json({ message: "Name and PIN required" });
-  if (!/^\d{4}$/.test(pin)) return res.status(400).json({ message: "PIN must be 4 digits" });
+  if (!name || !pin) {
+    return res.status(400).json({ message: "Name and PIN required" });
+  }
+
+  if (!/^\d{4}$/.test(pin)) {
+    return res.status(400).json({ message: "PIN must be 4 digits" });
+  }
 
   try {
     user.name = name;
     user.pin = pin;
+    user.isLogin = true; // ✅ Mark user as logged in
     await user.save();
 
-    res.json({ message: "Name and PIN set successfully", user });
+    res.status(200).json({
+      success: true,
+      message: "Name, PIN set successfully and user logged in",
+      user,
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("setNameAndPin Error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
 
 // Verify PIN → protected route
 export const verifyPin = async (req, res) => {
